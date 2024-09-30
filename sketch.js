@@ -25,6 +25,18 @@ function setup() {
   downloadButton.position(10, 70, 'fixed');
   downloadButton.hide();
   downloadButton.mousePressed(saveImage);
+
+  loadingSpinner = createDiv('Загрузка...');
+  loadingSpinner.style('font-size', '24px');
+  loadingSpinner.style('color', 'white');
+  loadingSpinner.style('position', 'absolute');
+  loadingSpinner.style('top', '50%');
+  loadingSpinner.style('left', '50%');
+  loadingSpinner.style('transform', 'translate(-50%, -50%)');
+  loadingSpinner.style('background-color', 'rgba(0, 0, 0, 0.5)');
+  loadingSpinner.style('padding', '20px');
+  loadingSpinner.style('border-radius', '10px');
+  loadingSpinner.hide();
 }
 
 function draw() {
@@ -69,6 +81,8 @@ function draw() {
 
 function handleFile(file) {
   if (file && file.type === 'image') {
+    loadingSpinner.show();
+
     img = loadImage(file.data, () => {
       let imgWidth = img.width;
       let imgHeight = img.height;
@@ -76,6 +90,7 @@ function handleFile(file) {
       resizeCanvas(imgWidth, imgHeight);
       redraw();
 
+      loadingSpinner.hide();
       downloadButton.show();
     });
   }
