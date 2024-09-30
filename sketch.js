@@ -1,6 +1,7 @@
 let img;
 let fileInput;
 let downloadButton;
+let downloadJpegButton;
 let fakeButton;
 
 function setup() {
@@ -25,6 +26,11 @@ function setup() {
   downloadButton.position(10, 70, 'fixed');
   downloadButton.hide();
   downloadButton.mousePressed(saveImage);
+
+  downloadJpegButton = createButton('Скачать изображение (JPEG)');
+  downloadJpegButton.position(10, 110, 'fixed');
+  downloadJpegButton.hide();
+  downloadJpegButton.mousePressed(saveAsJpeg);
 
   loadingSpinner = createDiv('Загрузка...');
   loadingSpinner.style('font-size', '24px');
@@ -92,10 +98,22 @@ function handleFile(file) {
 
       loadingSpinner.hide();
       downloadButton.show();
+      downloadJpegButton.show();
     });
   }
 }
 
 function saveImage() {
   saveCanvas('pixel_image', 'png');
+}
+
+function saveAsJpeg() {
+  let canvas = document.querySelector('canvas');
+  let dataURL = canvas.toDataURL('image/jpeg', 0.8);
+
+  let link = document.createElement('a');
+  link.href = dataURL;
+  link.download = 'pixel_image.jpg';
+
+  link.click();
 }
