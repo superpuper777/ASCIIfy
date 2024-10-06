@@ -28,7 +28,7 @@ function setup() {
   downloadButton.mousePressed(saveImage);
 
   downloadJpegButton = createButton('Скачать изображение (JPEG)');
-  downloadJpegButton.position(10, 110, 'fixed');
+  downloadJpegButton.position(10, 130, 'fixed');
   downloadJpegButton.hide();
   downloadJpegButton.mousePressed(saveAsJpeg);
 
@@ -93,7 +93,25 @@ function handleFile(file) {
       let imgWidth = img.width;
       let imgHeight = img.height;
 
-      resizeCanvas(imgWidth, imgHeight);
+      let maxWidth = 500;
+      let maxHeight = 500;
+
+      // Вычисляем новое соотношение сторон
+      let aspectRatio = imgWidth / imgHeight;
+
+      let newWidth, newHeight;
+
+      if (imgWidth > imgHeight) {
+        newWidth = maxWidth;
+        newHeight = maxWidth / aspectRatio;
+      } else {
+        newHeight = maxHeight;
+        newWidth = maxHeight * aspectRatio;
+      }
+
+      img.resize(newWidth, newHeight);
+      resizeCanvas(newWidth, newHeight);
+
       redraw();
 
       loadingSpinner.hide();

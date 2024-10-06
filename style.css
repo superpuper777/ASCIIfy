@@ -18,6 +18,13 @@ canvas {
   margin: 0 auto;
 }
 
+canvas image {
+  width: 900px;
+  height: 900px;
+  object-fit: contain;
+  background: #0056b3;
+}
+
 button {
   background-color: #007bff;
   color: white;
